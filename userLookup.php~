@@ -1,0 +1,55 @@
+<html>
+<title>Find UserID/signup</title>
+<body>
+<h1> Find your userID and signup date to save your music!</h1>
+Just type in your username into our <b>SECURE</b> query below to find the information needed to backup your iTunes information
+<form action="/userLookup.php" method="get">
+<br> 
+Username:
+<input type ="text" name = "username">
+
+<input type="submit" value="Search">
+</form>
+</body>
+
+</html>
+<?php
+//DB connection info
+$hn = '127.0.0.1';
+$db = 'users';
+$un = "root";
+$pw = "toor";
+
+//Connection for DB
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error)die("Fatal Error");
+
+//Checks to see if submit has been pressed before, if so: grabs userID inputted.
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+	if (isset($_GET['username']) ){
+		$username=$_GET['username'];
+	}
+
+	//Queries database and stores result in a variable.
+       //If query fails, returns WAY too much information
+
+        //$username = stripslashes($username);
+        //$username = mysql_real_escape_string($username);
+
+	$query = "SELECT ID, signupDate  FROM userInfo WHERE username='$username';";
+	$result = mysqli_query($conn, $query);
+	if (!$result){
+		echo"Query: $query <b>failed</b> <br>";
+		exit;
+	}
+
+	//Prints out the returned information
+        while ($row = mysqli_fetch_assoc($result)){
+                if (!$row){print"NOTHING";}
+		foreach($row as $cname => $cvalue){
+			print "<h1><font color='blue'> $cname: $cvalue\t</font></h1><br>";
+			print "\r\n";
+}
+}
+}
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<title> loginPage </title>
+<body>
+	<div>
+		<h1>Login Page</h1>
+	</div>
+	<div>
+		<form action = "/login.php" method="get">
+
+		Username:<br>
+		<input type = "text" name = "username"><br>
+
+		Password:<br>
+		<input type = "password" name = "password"><br>
+
+		<input type = "submit" value = "Submit">
+		</form>
+	</div>
+
+
+	<div>
+		<form action = "/newLogin.php" method="get">
+		<input type = "submit" value = "Create a new account">
+		</form>	
+	</div>
+
+</body>
+</html>
+<?php
+$host="localhost"; //the server name that is hosting the db
+$user="root"; //username for the system
+$password="toor"; //pw for the username to log into the db
+$dbname="users"; //the name of the database you want to use
+$tableName = "userInfo"; //the name of the table you want to manipulate
+
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+
+$query = "SELECT username FROM $tableName";
+
+$result = mysqli_query($conn,$query);
+
+$rows =  $result->num_rows;
+
+echo "Number of users signed up: $rows <br>";
+
+session_start();
+if($_SESSION['loginError'] > 0){
+   echo "wrong pw or username";
+}
+
+?>

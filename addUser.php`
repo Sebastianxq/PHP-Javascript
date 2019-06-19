@@ -1,0 +1,31 @@
+<?php 
+$hn = 'localhost';
+$db = 'users';
+$un = "root";
+$pw = "toor";
+
+//$id = $_GET['id'];
+$userName = $_GET['userName'];
+$password = $_GET['password'];
+$userFirstName = $_GET['firstName'];
+$userLastName = $_GET['lastName'];
+//$createdTime = date("Y-m-d h:i:s A")." at ".time();
+
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error)die("Fatal Error");
+
+//gets the id dynamically, always creates a new user as n+1
+$idSQL = mysql_query("SELECT MAX (id) AS max FROM userInfo;");
+$row = mysql_fetch_array($idSQL);
+$largestID = $row['max'];
+$id = $largestID+1;
+
+echo "curr $id"; 
+//$query = "INSERT INTO user(id,userName,firstName,lastName, password)
+//VALUES('$id','$userName',
+//'$userFirstName','$userLastName','$password')";
+//$query = "SELECT uID,firstName,lastName FROM user WHERE userName = '$userName'";
+//$result = $conn->query($query) or trigger_error(mysql_error()." ".$query);
+//header("Location: /userLookup.php");
+
+?>

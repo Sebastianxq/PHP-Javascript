@@ -1,0 +1,50 @@
+<html>
+<title>Find Username</title>
+<body>
+<h1> Find username page</h1>
+Type in a first name to find the username associated with it
+<form action="/userLookup.php" method="get">
+
+ID:<br>
+<input type ="text" name = "firstName"><br>
+
+<input type="submit" value="Submit">
+</form>
+</body>
+
+</html>
+<?php
+//DB connection info
+$hn = '127.0.0.1';
+$db = 'users';
+$un = "root";
+$pw = "toor";
+
+//Connection for DB
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error)die("Fatal Error");
+
+//Checks to see if submit has been pressed before, if so: grabs userID inputted.
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+	if (isset($_GET['firstName']) ){
+		$firstName=$_GET['firstName'];
+	}
+
+	//Queries database and stores result in a variable.
+	//If query fails, returns WAY too much information
+	$query = "SELECT username, firstName FROM userInfo WHERE firstName='$firstName';";
+	$result = mysqli_query($conn, $query);
+	if (!$result){
+		echo"Query: $query <b>failed</b> <br>";
+		exit;
+	}
+
+
+	//Prints out  the returned information
+	while ($row = mysqli_fetch_assoc($result)){
+		foreach($row as $cname => $cvalue){
+			print "<h1><font color='blue'> $cname: $cvalue\t</font></h1><br>";
+			print "\r\n";
+		}
+}
+
